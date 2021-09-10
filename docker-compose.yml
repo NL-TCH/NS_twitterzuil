@@ -1,0 +1,62 @@
+version: '3'
+services:
+  Database:
+    container_name: NS_Database
+    image: postgres:9.6
+    env_file:
+      - database.env
+    volumes:
+      - database-data:/var/lib/postgresql/data/
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      NS_NW:
+        ipv4_address: 10.27.3.100
+    restart: unless-stopped
+
+  pgadmin:
+    container_name: NS_Database_GUI
+    image: dpage/pgadmin4:5.7
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-teunis@teunis.dev}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+    volumes:
+        - pgadmin:/root/.pgadmin
+    ports:
+      - "${PGADMIN_PORT:-5050}:80"
+    networks:
+      NS_NW:
+        ipv4_address: 10.27.3.101
+    restart: unless-stopped
+
+ Site:
+    container_name: NS_Site
+    environment:
+      PYTHONBUFFERED: 0
+    build: Site/.
+    networks:
+      NS_NW:
+        ipv4_address: 10.27.3.200
+    restart: unless-stopped
+
+  Reverse_Proxy:
+    container_name: NS_Proxy
+    build: NGINX/.
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      NS_NW: 
+        ipv4_address: 10.27.3.2
+    restart: unless-stopped
+
+volumes:
+  database-data:
+  pgadmin:
+
+networks:
+  NS_NW:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.27.3.0/16
+          gateway: 10.27.3.1
