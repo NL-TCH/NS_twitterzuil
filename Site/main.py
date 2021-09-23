@@ -44,15 +44,10 @@ def dashboard():
     else:
         if request.method == 'POST':
             if session['logged_in']:
-                
-                return render_template('dashboard.html')
-            else:
                 return render_template('dashboard.html')
         if session['logged_in']:
-                
             return render_template('dashboard.html')
-        else:
-            return render_template('dashboard.html')
+        
 
 @app.route("/logout")
 def logout():
@@ -62,21 +57,44 @@ def logout():
     
 @app.route("/moderatie")
 def moderator():
-    gegevens=functions.ophalen_gegevens()
-    if len(gegevens)==0:
-        regels =0
-    elif len(gegevens)==1:
-        regels =1
-    elif len(gegevens)==2:
-        regels =2
-    elif len(gegevens)==3:
-        regels =3
-    elif len(gegevens)==4:
-        regels =4
-    elif len(gegevens)==5:
-        regels =5
+    """ Session control"""
+    if not session.get('logged_in'):
+        return redirect(url_for('login'))
+    else:
+        if request.method == 'POST':
+            if session['logged_in']:
+                gegevens=functions.ophalen_gegevens()
+                if len(gegevens)==0:
+                    regels =0
+                elif len(gegevens)==1:
+                    regels =1
+                elif len(gegevens)==2:
+                    regels =2
+                elif len(gegevens)==3:
+                    regels =3
+                elif len(gegevens)==4:
+                    regels =4
+                elif len(gegevens)==5:
+                    regels =5
+                
+                return render_template('moderatie.html', gegevens=functions.ophalen_gegevens(),regels=regels)
+        if session['logged_in']:
+            gegevens=functions.ophalen_gegevens()
+            if len(gegevens)==0:
+                regels =0
+            elif len(gegevens)==1:
+                regels =1
+            elif len(gegevens)==2:
+                regels =2
+            elif len(gegevens)==3:
+                regels =3
+            elif len(gegevens)==4:
+                regels =4
+            elif len(gegevens)==5:
+                regels =5
+            
+            return render_template('moderatie.html', gegevens=functions.ophalen_gegevens(),regels=regels)
     
-    return render_template('moderatie.html', gegevens=functions.ophalen_gegevens(),regels=regels)
 
 if __name__ == "__main__":
     app.secret_key = "123"

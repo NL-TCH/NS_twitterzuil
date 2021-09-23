@@ -64,6 +64,7 @@ https://templatemo.com/tm-529-ramayana
                         <thead>
                           <tr>
                             <th>Accepteer</th>
+                            <th>Wijs af</th>
                             <th>Titel</th>
                             <th>Klacht</th>
                           </tr>
@@ -71,20 +72,43 @@ https://templatemo.com/tm-529-ramayana
                         <tbody>
                           {% if regels>=1 %}
                           <tr>
-                            <td>Ja/Nee</td>
+                            <td><div class="col-md-4 col-sm-4">
+                              <div class="circle-item">
+                                <input name="Keuze1" type="radio" id="Keuze1.1" value="1" checked>
+                                <label for="Keuze1.1">Accepteer</label>
+                              </div>
+                            </div>
+                            </td>
+                            <td><div class="col-md-4 col-sm-4">
+                              <div class="circle-item">
+                                <input name="Keuze1" type="radio" id="Keuze1.2" value="1">
+                                <label for="Keuze1.2">Wijs af</label>
+                              </div></td>
                             <td>{{gegevens[0][0]}}</td>
                             <td>{{gegevens[0][1]}}</td>
                           </tr>
                           {% endif %}
                           {% if regels>=2 %}
                           <tr>
-                            <td>Ja/Nee</td>
+                            <td><div class="col-md-4 col-sm-4">
+                              <div class="circle-item">
+                                <input name="Keuze2" type="radio" id="Keuze2.1" value="1" checked>
+                                <label for="Keuze2.1">Accepteer</label>
+                              </div>
+                            </div>
+                            </td>
+                            <td><div class="col-md-4 col-sm-4">
+                              <div class="circle-item">
+                                <input name="Keuze2" type="radio" id="Keuze2.2" value="1">
+                                <label for="Keuze2.2">Wijs af</label>
+                              </div></td>
                             <td>{{gegevens[1][0]}}</td>
                             <td>{{gegevens[1][1]}}</td>
                           </tr>
                           {% endif %}
                           {% if regels>=3 %}
                           <tr>
+                            <td>Ja/Nee</td>
                             <td>Ja/Nee</td>
                             <td>{{gegevens[2][0]}}</td>
                             <td>{{gegevens[2][1]}}</td>
@@ -93,12 +117,14 @@ https://templatemo.com/tm-529-ramayana
                           {% if regels>=4 %}
                           <tr>
                             <td>Ja/Nee</td>
+                            <td>Ja/Nee</td>
                             <td>{{gegevens[3][0]}}</td>
                             <td>{{gegevens[3][1]}}</td>
                           </tr>
                           {% endif %}
                           {% if regels>=5 %}
                           <tr>
+                            <td>Ja/Nee</td>
                             <td>Ja/Nee</td>
                             <td>{{gegevens[4][0]}}</td>
                             <td>{{gegevens[4][1]}}</td>
