@@ -96,6 +96,43 @@ def moderator():
             return render_template('moderatie.html', gegevens=functions.ophalen_gegevens(),regels=regels)
     
 
+@app.route('/submit', methods=["POST","GET"])
+def submit():
+    if request.method == "POST":
+        total=[]
+        try:
+            if request.form["Keuze1"] != None:
+                Keuze1 = request.form["Keuze1"]
+                total.append(Keuze1)
+        except KeyError:
+            print()
+        try:
+            if request.form["Keuze2"] != None:
+                Keuze2 = request.form["Keuze2"]
+                total.append(Keuze2)
+        except KeyError:
+            print()
+        try:
+            if request.form["Keuze3"] != None:
+                Keuze3 = request.form["Keuze3"]
+                total.append(Keuze3)
+        except KeyError:
+            print()
+        try:
+            if request.form["Keuze4"] != None:
+                Keuze4 = request.form["Keuze4"]
+                total.append(Keuze4)
+        except KeyError:
+            print()
+        try:
+            if request.form["Keuze5"] != None:
+                Keuze5 = request.form["Keuze5"]
+                total.append(Keuze5)
+        except KeyError:
+            print()
+        print(total)
+        functions.moderatie_toepassen(total)
+        return redirect(url_for('moderator'))
 if __name__ == "__main__":
     app.secret_key = "123"
     app.run(debug=True,host='0.0.0.0',port=8080)

@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
 
-    <title>Ramayana - HTML5 Template</title>
+    <title>Moderatie</title>
 
     <!-- Bootstrap core CSS -->
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='bootstrap/css/bootstrap.min.css') }}">
@@ -38,7 +38,7 @@ https://templatemo.com/tm-529-ramayana
             <!-- Header -->
             <header id="header">
               <div class="logo">
-                <a href="index.html">Ramayana</a>
+                <a href="/">NS-Twitterzuil</a>
               </div>
             </header>
 
@@ -56,6 +56,7 @@ https://templatemo.com/tm-529-ramayana
             
             <!-- Tables -->
             <section class="tables">
+              <form id="keuze" action="/submit" method="post">
               <div class="container-fluid">
                 <div class="row">
                   <div class="col-md-12">
@@ -74,14 +75,14 @@ https://templatemo.com/tm-529-ramayana
                           <tr>
                             <td><div class="col-md-4 col-sm-4">
                               <div class="circle-item">
-                                <input name="Keuze1" type="radio" id="Keuze1.1" value="1" checked>
+                                <input name="Keuze1" type="radio" id="Keuze1.1" value="1.1" checked>
                                 <label for="Keuze1.1">Accepteer</label>
                               </div>
                             </div>
                             </td>
                             <td><div class="col-md-4 col-sm-4">
                               <div class="circle-item">
-                                <input name="Keuze1" type="radio" id="Keuze1.2" value="1">
+                                <input name="Keuze1" type="radio" id="Keuze1.2" value="1.0">
                                 <label for="Keuze1.2">Wijs af</label>
                               </div></td>
                             <td>{{gegevens[0][0]}}</td>
@@ -92,14 +93,14 @@ https://templatemo.com/tm-529-ramayana
                           <tr>
                             <td><div class="col-md-4 col-sm-4">
                               <div class="circle-item">
-                                <input name="Keuze2" type="radio" id="Keuze2.1" value="1" checked>
+                                <input name="Keuze2" type="radio" id="Keuze2.1" value="2.1" checked>
                                 <label for="Keuze2.1">Accepteer</label>
                               </div>
                             </div>
                             </td>
                             <td><div class="col-md-4 col-sm-4">
                               <div class="circle-item">
-                                <input name="Keuze2" type="radio" id="Keuze2.2" value="1">
+                                <input name="Keuze2" type="radio" id="Keuze2.2" value="2.0">
                                 <label for="Keuze2.2">Wijs af</label>
                               </div></td>
                             <td>{{gegevens[1][0]}}</td>
@@ -108,24 +109,54 @@ https://templatemo.com/tm-529-ramayana
                           {% endif %}
                           {% if regels>=3 %}
                           <tr>
-                            <td>Ja/Nee</td>
-                            <td>Ja/Nee</td>
+                            <td><div class="col-md-4 col-sm-4">
+                              <div class="circle-item">
+                                <input name="Keuze3" type="radio" id="Keuze3.1" value="3.1" checked>
+                                <label for="Keuze3.1">Accepteer</label>
+                              </div>
+                            </div>
+                            </td>
+                            <td><div class="col-md-4 col-sm-4">
+                              <div class="circle-item">
+                                <input name="Keuze3" type="radio" id="Keuze3.2" value="3.0">
+                                <label for="Keuze3.2">Wijs af</label>
+                              </div>
                             <td>{{gegevens[2][0]}}</td>
                             <td>{{gegevens[2][1]}}</td>
                           </tr>
                           {% endif %}
                           {% if regels>=4 %}
                           <tr>
-                            <td>Ja/Nee</td>
-                            <td>Ja/Nee</td>
+                            <td><div class="col-md-4 col-sm-4">
+                              <div class="circle-item">
+                                <input name="Keuze4" type="radio" id="Keuze4.1" value="4.1" checked>
+                                <label for="Keuze4.1">Accepteer</label>
+                              </div>
+                            </div>
+                            </td>
+                            <td><div class="col-md-4 col-sm-4">
+                              <div class="circle-item">
+                                <input name="Keuze4" type="radio" id="Keuze4.2" value="4.0">
+                                <label for="Keuze4.2">Wijs af</label>
+                              </div>
                             <td>{{gegevens[3][0]}}</td>
                             <td>{{gegevens[3][1]}}</td>
                           </tr>
                           {% endif %}
                           {% if regels>=5 %}
                           <tr>
-                            <td>Ja/Nee</td>
-                            <td>Ja/Nee</td>
+                            <td><div class="col-md-4 col-sm-4">
+                              <div class="circle-item">
+                                <input name="Keuze5" type="radio" id="Keuze5.1" value="5.1" checked>
+                                <label for="Keuze5.1">Accepteer</label>
+                              </div>
+                            </div>
+                            </td>
+                            <td><div class="col-md-4 col-sm-4">
+                              <div class="circle-item">
+                                <input name="Keuze5" type="radio" id="Keuze5.2" value="5.0">
+                                <label for="Keuze5.2">Wijs af</label>
+                              </div>
                             <td>{{gegevens[4][0]}}</td>
                             <td>{{gegevens[4][1]}}</td>
                           {% endif %}
@@ -136,7 +167,13 @@ https://templatemo.com/tm-529-ramayana
                   </div>
                 </div>
               </div>
+              <br/><br/>
+              <div class="col-md-12">
+                <button type="submit" id="form-submit" class="button">Keuze bevestigen</button>
+              </div>
+            </form>
             </section>
+            
 
             <!-- Forms -->
             <section class="forms">
@@ -310,26 +347,18 @@ https://templatemo.com/tm-529-ramayana
             <!-- Menu -->
            <nav id="menu">
               <ul>
-                <li><a href="index.html">Homepage</a></li>
-                <li><a href="simple_page.html">Simple Page</a></li>
-                <li><a href="shortcodes.html">Shortcodes</a></li>
+                <li><a href="/">Klachtenboard</a></li>
+                <li><a href="/dashboard">Dashboard</a></li>
+                <li><a href="/moderatie">Moderatiepagina</a></li>
                 <li>
-                  <span class="opener">Dropdown One</span>
+                  <span class="opener">Statistieken</span>
                   <ul>
-                    <li><a href="#">First Sub Menu</a></li>
-                    <li><a href="#">Second Sub Menu</a></li>
-                    <li><a href="#">Third Sub Menu</a></li>
+                    <li><a href="#">Woordenfiltering</a></li>
+                  <!--<li><a href="#">Second Sub Menu</a></li>
+                    <li><a href="#">Third Sub Menu</a></li>-->
                   </ul>
                 </li>
-                <li>
-                  <span class="opener">Dropdown Two</span>
-                  <ul>
-                    <li><a href="#">Sub Menu #1</a></li>
-                    <li><a href="#">Sub Menu #2</a></li>
-                    <li><a href="#">Sub Menu #3</a></li>
-                  </ul>
-                </li>
-                <li><a href="https://www.google.com">External Link</a></li>
+                <li><a href="simple_page.html">Voorkeuren</a></li>
               </ul>
             </nav>
             

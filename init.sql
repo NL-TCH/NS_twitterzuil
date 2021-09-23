@@ -1,4 +1,5 @@
 CREATE TABLE Klachten (
+    id SERIAL PRIMARY KEY,
     Titel varchar(255),
     Klacht TEXT,
     Scheldwoord varchar(255),
