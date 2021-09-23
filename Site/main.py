@@ -130,7 +130,6 @@ def submit():
                 total.append(Keuze5)
         except KeyError:
             print()
-        print(total)
         functions.moderatie_toepassen(total)
         return redirect(url_for('moderator'))
 if __name__ == "__main__":

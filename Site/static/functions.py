@@ -50,7 +50,6 @@ def ophalen_gegevens():
 
 def moderatie_toepassen(total):
     for keuze in total:
-        print(keuze)
         #2.0
         if (int(keuze.replace('.',''))% 2) == 0:
             cursor.execute(f''' UPDATE klachten
@@ -61,7 +60,6 @@ def moderatie_toepassen(total):
                                 ORDER BY id
                                 LIMIT 1);''')
             conn.commit()
-            print('deny in database')
         #2.1
         elif ((int(keuze.replace('.',''))% 2) == 0) ==False:
             cursor.execute(f''' UPDATE klachten
@@ -72,4 +70,3 @@ def moderatie_toepassen(total):
                                 ORDER BY id
                                 LIMIT 1);''')
             conn.commit()
-            print('approve in database')
