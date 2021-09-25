@@ -63,7 +63,21 @@ def moderator():
     else:
         if request.method == 'POST':
             if session['logged_in']:
-                gegevens=functions.ophalen_gegevens()
+                gegevens=functions.ophalen_moderatie()
+                gegevens2 = functions.ophalen_moderated()
+                if len(gegevens2)==0:
+                    regels2 =0
+                elif len(gegevens2)==1:
+                    regels2 =1
+                elif len(gegevens2)==2:
+                    regels2 =2
+                elif len(gegevens2)==3:
+                    regels2 =3
+                elif len(gegevens2)==4:
+                    regels2 =4
+                elif len(gegevens2)==5:
+                    regels2 =5
+                
                 if len(gegevens)==0:
                     regels =0
                 elif len(gegevens)==1:
@@ -77,9 +91,23 @@ def moderator():
                 elif len(gegevens)==5:
                     regels =5
                 
-                return render_template('moderatie.html', gegevens=functions.ophalen_gegevens(),regels=regels)
+                return render_template('moderatie.html', gegevens=functions.ophalen_moderatie(),gegevens2=functions.ophalen_moderated(),regels=regels, regels2=regels2)
         if session['logged_in']:
-            gegevens=functions.ophalen_gegevens()
+            gegevens=functions.ophalen_moderatie()
+            gegevens2 = functions.ophalen_moderated()
+            if len(gegevens2)==0:
+                regels2 =0
+            elif len(gegevens2)==1:
+                regels2 =1
+            elif len(gegevens2)==2:
+                regels2 =2
+            elif len(gegevens2)==3:
+                regels2 =3
+            elif len(gegevens2)==4:
+                regels2 =4
+            elif len(gegevens2)==5:
+                regels2 =5
+            
             if len(gegevens)==0:
                 regels =0
             elif len(gegevens)==1:
@@ -93,7 +121,7 @@ def moderator():
             elif len(gegevens)==5:
                 regels =5
             
-            return render_template('moderatie.html', gegevens=functions.ophalen_gegevens(),regels=regels)
+            return render_template('moderatie.html', gegevens=functions.ophalen_moderatie(),gegevens2=functions.ophalen_moderated(),regels=regels, regels2=regels2)
     
 
 @app.route('/submit', methods=["POST","GET"])

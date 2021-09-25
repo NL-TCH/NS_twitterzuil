@@ -172,6 +172,109 @@ https://templatemo.com/tm-529-ramayana
                 <button type="submit" id="form-submit" class="button">Keuze bevestigen</button>
               </div>
             </form>
+            
+              <form id="keuze" action="/submit" method="post">
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="alternate-table">
+                      <table>
+                        <thead>
+                          <tr>
+                            <th>Geaccepteerd, systeem</th>
+                            <th>Scheldwoord</th>
+                            <th>Titel</th>
+                            <th>Klacht</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% if regels2>=1 %}
+                          <tr>
+                            {% if gegevens2[0][3] ==0 %}
+                            <td>Nee, Moderator</td>
+                            {% endif %}
+                            {% if gegevens2[0][3] ==2 %}
+                            <td>Ja, Handmatig</td>
+                            {% endif %}
+                            {% if gegevens2[0][3] ==3 %}
+                            <td>Nee, Handmatig</td>
+                            {% endif %}
+                            <td>{{gegevens2[0][2]}}</td>
+                            <td>{{gegevens2[0][0]}}</td>
+                            <td>{{gegevens2[0][1]}}</td>
+                          </tr>
+                          {% endif %}
+                          {% if regels2>=2 %}
+                          <tr>
+                            {% if gegevens2[1][3] ==0 %}
+                            <td>Nee, Moderator</td>
+                            {% endif %}
+                            {% if gegevens2[1][3] ==2 %}
+                            <td>Ja, Handmatig</td>
+                            {% endif %}
+                            {% if gegevens2[1][3] ==3 %}
+                            <td>Nee, Handmatig</td>
+                            {% endif %}
+                            <td>{{gegevens2[1][2]}}</td>
+                            <td>{{gegevens2[1][0]}}</td>
+                            <td>{{gegevens2[1][1]}}</td>
+                          </tr>
+                          {% endif %}
+                          {% if regels2>=3 %}
+                          <tr>
+                            {% if gegevens2[2][3] ==0 %}
+                            <td>Nee, Moderator</td>
+                            {% endif %}
+                            {% if gegevens2[2][3] ==2 %}
+                            <td>Ja, Handmatig</td>
+                            {% endif %}
+                            {% if gegevens2[2][3] ==3 %}
+                            <td>Nee, Handmatig</td>
+                            {% endif %}
+                            <td>{{gegevens2[2][2]}}</td>
+                            <td>{{gegevens2[2][0]}}</td>
+                            <td>{{gegevens2[2][1]}}</td>
+                          </tr>
+                          {% endif %}
+                          {% if regels2>=4 %}
+                          <tr>
+                            {% if gegevens2[3][3] ==0 %}
+                            <td>Nee, Moderator</td>
+                            {% endif %}
+                            {% if gegevens2[3][3] ==2 %}
+                            <td>Ja, Handmatig</td>
+                            {% endif %}
+                            {% if gegevens2[3][3] ==3 %}
+                            <td>Nee, Handmatig</td>
+                            {% endif %}
+                            <td>{{gegevens2[3][2]}}</td>
+                            <td>{{gegevens2[3][0]}}</td>
+                            <td>{{gegevens2[3][1]}}</td>
+                          </tr>
+                          {% endif %}
+                          {% if regels>=5 %}
+                          <tr>
+                            {% if gegevens2[4][3] ==0 %}
+                            <td>Nee, Moderator</td>
+                            {% endif %}
+                            {% if gegevens2[4][3] ==2 %}
+                            <td>Ja, Handmatig</td>
+                            {% endif %}
+                            {% if gegevens2[4][3] ==3 %}
+                            <td>Nee, Handmatig</td>
+                            {% endif %}
+                            <td>{{gegevens2[4][2]}}</td>
+                            <td>{{gegevens2[4][0]}}</td>
+                            <td>{{gegevens2[4][1]}}</td>
+                          {% endif %}
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
             </section>
           </div>
         </div>

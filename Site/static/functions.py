@@ -39,13 +39,24 @@ def moderator(Titel, Klacht):
     else:
         print('error')
 
-def ophalen_gegevens():
+def ophalen_moderatie():
     cursor.execute(f'''SELECT titel, klacht FROM klachten where status = '1' ORDER BY id limit 5''')
     conn.commit()
     gegevens = cursor.fetchall()
     titels = [x[0] for x in gegevens]
     klachten = [x[1] for x in gegevens]
     combinatie = [list(a) for a in zip(titels, klachten)]
+    return combinatie
+
+def ophalen_moderated():
+    cursor.execute(f'''SELECT titel, klacht, scheldwoord, status FROM klachten where status NOT IN ('1') ORDER BY id DESC limit 5''')
+    conn.commit()
+    gegevens =cursor.fetchall() #
+    titels = [x[0] for x in gegevens]
+    klachten = [x[1] for x in gegevens]
+    scheldwoorden = [x[2] for x in gegevens]
+    status = [x[3] for x in gegevens]
+    combinatie = [list(a) for a in zip(titels,klachten,scheldwoorden,status)]
     return combinatie
 
 def moderatie_toepassen(total):
