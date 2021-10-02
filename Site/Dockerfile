@@ -4,7 +4,11 @@ ADD Site/requirements.txt .
 
 COPY . /usr/src/app
 WORKDIR /usr/src/app
-RUN python -m pip install -r requirements.txt --user
+RUN pwd
+RUN ls
+RUN whoami
+RUN cat requirements.txt
+RUN python -m pip install -r requirements.txt
 
 EXPOSE 443
 
