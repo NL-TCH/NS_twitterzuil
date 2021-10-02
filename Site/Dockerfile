@@ -1,14 +1,13 @@
 FROM python:3.9
 
 ADD Site/requirements.txt .
-
+COPY Site/requirements.txt /usr/src/app
 COPY . /usr/src/app
 WORKDIR /usr/src/app
 RUN pwd
 RUN ls
 RUN whoami
-RUN cat requirements.txt
-RUN python -m pip install -r Site/requirements.txt
+RUN python -m pip install -r requirements.txt
 
 EXPOSE 443
 
