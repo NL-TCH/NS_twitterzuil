@@ -2,7 +2,7 @@ pipeline {
   environment {
     imagename = "dockerteun/ns"
     registryCredential = 'docker_usertoken'
-    dockerImage = 'Site/.'
+    args = 'Site/.'
   }
   agent any
   stages {
@@ -15,7 +15,7 @@ pipeline {
     stage('Building image') {
       steps{
         script {
-          dockerImage = docker.build imagename Site/.
+          dockerImage = docker.build imagename args
         }
       }
     }
