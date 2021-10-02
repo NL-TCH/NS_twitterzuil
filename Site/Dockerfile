@@ -1,6 +1,6 @@
 FROM python:3.9
 
-ADD requirements.txt .
+ADD Site/requirements.txt .
 
 COPY . /usr/src/app
 WORKDIR /usr/src/app
