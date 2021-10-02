@@ -15,7 +15,7 @@ pipeline {
     stage('Building image') {
       steps{
         script {
-          dockerImage = docker.build imagename args
+          dockerImage = docker.build(imagename, "-f Site/Dockerfile .")
         }
       }
     }
