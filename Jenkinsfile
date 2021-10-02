@@ -1,23 +1,19 @@
-pipeline {
-  agent any
-  stages {
-    stage('docker image') {
-      parallel {
-        stage('docker image') {
-          steps {
-            sh 'docker buildx create --use'
-            sh 'docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 -t dockerteun/ns:latest  Site/.'
-          }
+node {    
+      def app     
+      stage('Clone repository') {               
+             
+            checkout scm    
+      }           stage('Build image') {         
+       
+            app = docker.build("brandonjones085/test")    
+       }           stage('Test image') {                       app.inside {            
+             
+             sh 'echo "Tests passed"'        
+            }    
+        }            stage('Push image') {
+                                   docker.withRegistry('https://registry.hub.docker.com', 'git') {                   
+                                     app.push("${env.BUILD_NUMBER}")            
+                                     app.push("latest")        
+              }    
+           }
         }
-
-        stage('whoami') {
-          steps {
-            sh 'whoami'
-          }
-        }
-
-      }
-    }
-
-  }
-}
