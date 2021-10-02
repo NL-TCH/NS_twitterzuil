@@ -5,7 +5,9 @@ pipeline {
       parallel {
         stage('docker image') {
           steps {
-            sh 'docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 -t dockerteun/stockbot:latest --push Site/.'
+            sh '''docker buildx create &&
+
+docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 -t dockerteun/stockbot:latest --push Site/.'''
           }
         }
 
