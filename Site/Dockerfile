@@ -1,9 +1,10 @@
 FROM python:3.9
 
 ADD Site/requirements.txt .
-COPY Site/requirements.txt /usr/src/app
+
 COPY . /usr/src/app
 WORKDIR /usr/src/app
+COPY Site/requirements.txt /usr/src/app
 RUN pwd
 RUN ls
 RUN whoami
