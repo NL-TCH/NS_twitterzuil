@@ -2,7 +2,7 @@ pipeline {
   environment {
     imagename = "dockerteun/ns"
     registryCredential = 'docker_usertoken'
-    dockerImage = ''
+    dockerImage = 'Site/'
   }
   agent any
   stages {
