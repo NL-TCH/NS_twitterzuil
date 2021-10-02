@@ -1,9 +1,9 @@
 pipeline {
   agent any
   stages {
-    stage('test') {
+    stage('docker image') {
       steps {
-        sh 'ls'
+        sh 'docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 -t dockerteun/stockbot:latest --push Site/.'
       }
     }
 
