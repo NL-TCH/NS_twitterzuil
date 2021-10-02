@@ -4,6 +4,7 @@ ADD Site/requirements.txt .
 
 COPY . /usr/src/app
 WORKDIR /usr/src/app
+COPY requirements.txt .
 RUN pwd
 RUN ls
 RUN whoami
