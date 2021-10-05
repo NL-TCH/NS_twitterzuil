@@ -6,6 +6,6 @@ COPY . /usr/src/app
 WORKDIR /usr/src/app
 RUN python -m pip install -r requirements.txt
 
-EXPOSE 443
+EXPOSE 8085
 
 CMD ["python", "-u", "main.py"]
