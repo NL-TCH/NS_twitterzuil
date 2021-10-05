@@ -35,6 +35,8 @@ services:
     environment:
       PYTHONBUFFERED: 0
     build: Site/.
+    ports:
+      - 8085:8085
     networks:
       NS_NW:
         ipv4_address: 10.27.3.200
