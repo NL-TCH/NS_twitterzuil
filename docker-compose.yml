@@ -30,7 +30,7 @@ services:
         ipv4_address: 10.27.3.101
     restart: unless-stopped
 
- Site:
+  Site:
     container_name: NS_Site
     environment:
       PYTHONBUFFERED: 0
