@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
+
+    <title>Voorkeuren</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='bootstrap/css/bootstrap.min.css') }}">
+
+<!--
+Ramayana CSS Template
+https://templatemo.com/tm-529-ramayana
+-->
+
+    <!-- Additional CSS Files -->
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/fontawesome.css') }}">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/templatemo-style.css') }}">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/owl.css') }}">
+
+  </head>
+
+<body class="is-preload">
+
+    <!-- Wrapper -->
+    <div id="wrapper">
+
+      <!-- Main -->
+        <div id="main">
+          <div class="inner">
+
+            <!-- Header -->
+            <header id="header">
+              <div class="logo">
+                <a href="/">NS-Twitterzuil</a>
+              </div>
+            </header>
+
+            <!-- Page Heading -->
+            <div class="page-heading">
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-md-12">
+                    <h1>Voorkeueren</h1>
+                    <p>Op deze pagina kunnen er woorden toegevoegd worden waarop de moderatorbot kan filteren. Wanneer een wooord in de titel of review matcht met onderstaande woorden wordt deze automatisch afgewezen. Onderaan de pagina kan u (scheld)woorden toevoegen of verwijderen.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Tables -->
+            <section class="tables">
+              <form id="keuze" action="/submit" method="post">
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="alternate-table">
+                      <table>
+                        <thead>
+                          <tr>
+                            <th>Woorden</th>
+                            <th>frequentie</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        {% for woord, frequentie in gegevens %}
+                            <tr>
+                              <td>{{ woord }}</td>
+                              <td>{{ frequentie }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <br/><br/>
+            </form>
+            </section>
+            <section class="forms">
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="section-heading">
+                      <h2>Filterwoord toevoegen</h2>
+                    </div>
+                    <form id="scheldwoorden" action="" method="post">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <fieldset>
+                            <input name="filterwoord" type="text" class="form-control" id="filterwoord" placeholder="Scheldwoord">
+                          </fieldset>
+                        </div>
+                        <div class="col-md-6">
+                          <fieldset>
+                            <button type="submit" name="toevoegen/verwijderen" value='toevoegen' class="button">Woord toevoegen</button>
+                          </fieldset>
+                        </div>
+                        <div class="section-heading">
+                          <h2>Filterwoord verwijderen</h2>
+                        </div>
+                        <div class="col-md-12">
+                          <select name="category" id="category">
+                            {% for woord, frequentie in gegevens %}
+                            <option name='filterwoord'>{{woord}}</option>
+                            {% endfor %}
+                          </select>
+                          <div class="col-md-6">
+                            <fieldset>
+                              <button type="submit" name="toevoegen/verwijderen" value='verwijderen' class="button">Woord verwijderen</button>
+                            </fieldset>
+                          </div>
+                        </div>
+                      </form>
+            </section>
+          </div>
+        </div>
+
+      <!-- Sidebar -->
+        <div id="sidebar">
+
+          <div class="inner">
+
+              
+            <!-- Menu -->
+           <nav id="menu">
+            <ul>
+              <li><a href="/">Reviewform</a></li>
+              <li><a href="/dashboard">Dashboard</a></li>
+              <li><a href="/moderatie">Moderatiepagina</a></li>
+              <li>
+                <span class="opener">Statistieken</span>
+                <ul>
+                  <li><a href="/statistieken/woordenfiltering">Woordenfiltering</a></li>
+                <!--<li><a href="#">Second Sub Menu</a></li>
+                  <li><a href="#">Third Sub Menu</a></li>-->
+                </ul>
+              </li>
+              <li><a href="/voorkeuren">Voorkeuren</a></li>
+            </ul>
+            </nav>
+            <footer id="footer">
+              <p class="copyright">Log Uit
+              <br><a rel="nofollow"  href="/logout">Logout</a></p>
+            </footer>
+          </div>
+        </div>
+
+    </div>
+
+  <!-- Scripts -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="{{url_for('static', filename='jquery/jquery.min.js')}}"></script>
+  <script src="{{url_for('static', filename='bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+
+  <script src="{{url_for('static', filename='js/browser.min.js')}}"></script>
+  <script src="{{url_for('static', filename='js/breakpoints.min.js')}}"></script>
+  <script src="{{url_for('static', filename='js/browser.min.js')}}"></script>
+  <script src="{{url_for('static', filename='js/owl-carousel.js')}}"></script>
+  <script src="{{url_for('static', filename='js/custom.js')}}"></script>
+</body>
+
+
+  </body>
+
+</html>
