@@ -1,6 +1,6 @@
 version: '3'
 services:
-  Database:
+  database:
     container_name: NS_Database
     image: postgres:9.6
     env_file:
@@ -8,6 +8,8 @@ services:
     volumes:
       - database-data:/var/lib/postgresql/data/
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: "exit 0"
     ports:
       - 5432:5432
     networks:
@@ -35,6 +37,9 @@ services:
     environment:
       PYTHONBUFFERED: 0
     build: Site/.
+    depends_on:
+      database:
+        condition: service_healthy
     ports:
       - 8085:8085
     networks:
