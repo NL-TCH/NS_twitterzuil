@@ -1,6 +1,6 @@
 import psycopg2 as sql
 
-conn = sql.connect('host=127.0.0.1 user=NS_User password=NS_Password dbname=NS_Database')
+conn = sql.connect('host=10.27.3.100 user=NS_User password=NS_Password dbname=NS_Database')
 cursor = conn.cursor()
 
 def moderator(Naam,Titel, Klacht):
