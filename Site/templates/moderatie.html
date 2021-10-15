@@ -48,7 +48,8 @@ https://templatemo.com/tm-529-ramayana
                 <div class="row">
                   <div class="col-md-12">
                     <h1>Moderatiepagina</h1>
-                    <p><strong>{{gegevens}}<br/>{{gegevens[0]}}</strong> is free Bootstrap 4 CSS template from templatemo website. You can feel free to use it. Donec mattis tincidunt ipsum vel efficitur. Aliquam aliquam interdum rhoncus. Nam nec condimentum dolor, et pharetra nisi. In feugiat felis nec erat eleifend condimentum. Aliquam egestas convallis eros sed gravida. Curabitur consequat sit amet neque ac ornare.</p>
+                    <p>Op deze moderatiepagina kan u in de eerste tabel klachten goed of afkeuren. Er is een moderatorbot (zie voorkeuren) die op scheldwoorden filtert en u daarbij helpt.<br/>
+                    De tweede tabel geeft een overzicht van de 5 beoordeelde klachten (van de moderator en de gebruiker)</p>
                   </div>
                 </div>
               </div>
@@ -188,6 +189,7 @@ https://templatemo.com/tm-529-ramayana
                           </tr>
                         </thead>
                         <tbody>
+                         
                           {% if regels2>=1 %}
                           <tr>
                             {% if gegevens2[0][3] ==0 %}
@@ -199,7 +201,12 @@ https://templatemo.com/tm-529-ramayana
                             {% if gegevens2[0][3] ==3 %}
                             <td>Nee, Handmatig</td>
                             {% endif %}
+                            {% if gegevens2[0][2] != None %}
+                            <td bgcolor="red">{{gegevens2[0][2]}}</td>
+                            {% endif %}
+                            {% if gegevens2[0][2] == None %}
                             <td>{{gegevens2[0][2]}}</td>
+                            {% endif %}
                             <td>{{gegevens2[0][0]}}</td>
                             <td>{{gegevens2[0][1]}}</td>
                           </tr>
@@ -215,7 +222,12 @@ https://templatemo.com/tm-529-ramayana
                             {% if gegevens2[1][3] ==3 %}
                             <td>Nee, Handmatig</td>
                             {% endif %}
+                            {% if gegevens2[1][2] != None %}
+                            <td bgcolor="red">{{gegevens2[1][2]}}</td>
+                            {% endif %}
+                            {% if gegevens2[1][2] == None %}
                             <td>{{gegevens2[1][2]}}</td>
+                            {% endif %}
                             <td>{{gegevens2[1][0]}}</td>
                             <td>{{gegevens2[1][1]}}</td>
                           </tr>
@@ -231,7 +243,12 @@ https://templatemo.com/tm-529-ramayana
                             {% if gegevens2[2][3] ==3 %}
                             <td>Nee, Handmatig</td>
                             {% endif %}
+                            {% if gegevens2[2][2] != None %}
+                            <td bgcolor="red">{{gegevens2[2][2]}}</td>
+                            {% endif %}
+                            {% if gegevens2[2][2] == None %}
                             <td>{{gegevens2[2][2]}}</td>
+                            {% endif %}
                             <td>{{gegevens2[2][0]}}</td>
                             <td>{{gegevens2[2][1]}}</td>
                           </tr>
@@ -247,12 +264,17 @@ https://templatemo.com/tm-529-ramayana
                             {% if gegevens2[3][3] ==3 %}
                             <td>Nee, Handmatig</td>
                             {% endif %}
+                            {% if gegevens2[3][2] != None %}
+                            <td bgcolor="red">{{gegevens2[3][2]}}</td>
+                            {% endif %}
+                            {% if gegevens2[3][2] == None %}
                             <td>{{gegevens2[3][2]}}</td>
+                            {% endif %}
                             <td>{{gegevens2[3][0]}}</td>
                             <td>{{gegevens2[3][1]}}</td>
                           </tr>
                           {% endif %}
-                          {% if regels>=5 %}
+                          {% if regels2>=5 %}
                           <tr>
                             {% if gegevens2[4][3] ==0 %}
                             <td>Nee, Moderator</td>
@@ -263,7 +285,12 @@ https://templatemo.com/tm-529-ramayana
                             {% if gegevens2[4][3] ==3 %}
                             <td>Nee, Handmatig</td>
                             {% endif %}
+                            {% if gegevens2[4][2] != None %}
+                            <td bgcolor="red">{{gegevens2[4][2]}}</td>
+                            {% endif %}
+                            {% if gegevens2[4][2] == None %}
                             <td>{{gegevens2[4][2]}}</td>
+                            {% endif %}
                             <td>{{gegevens2[4][0]}}</td>
                             <td>{{gegevens2[4][1]}}</td>
                           {% endif %}
@@ -280,32 +307,37 @@ https://templatemo.com/tm-529-ramayana
         </div>
 
       <!-- Sidebar -->
-        <div id="sidebar">
+      <div id="sidebar">
 
-          <div class="inner">
+        <div class="inner">
+            
+          <!-- Menu -->
+          <nav id="menu">
+            <ul>
+              <li><a href="/">Reviewform</a></li>
+              <li><a href="/dashboard">Dashboard</a></li>
+              <li><a href="/moderatie">Moderatiepagina</a></li>
+              <li>
+                <span class="opener">Statistieken</span>
+                <ul>
+                  <li><a href="/statistieken/woordenfiltering">Woordenfiltering</a></li>
+                <!--<li><a href="#">Second Sub Menu</a></li>
+                  <li><a href="#">Third Sub Menu</a></li>-->
+                </ul>
+              </li>
+              <li><a href="/voorkeuren">Voorkeuren</a></li>
+            </ul>
+          </nav>
+          <footer id="footer">
+            <p class="copyright">Log Uit
+            <br><a rel="nofollow"  href="/logout">Logout</a></p>
+          </footer>
 
-              
-            <!-- Menu -->
-           <nav id="menu">
-              <ul>
-                <li><a href="/">Klachtenboard</a></li>
-                <li><a href="/dashboard">Dashboard</a></li>
-                <li><a href="/moderatie">Moderatiepagina</a></li>
-                <li>
-                  <span class="opener">Statistieken</span>
-                  <ul>
-                    <li><a href="#">Woordenfiltering</a></li>
-                  <!--<li><a href="#">Second Sub Menu</a></li>
-                    <li><a href="#">Third Sub Menu</a></li>-->
-                  </ul>
-                </li>
-                <li><a href="simple_page.html">Voorkeuren</a></li>
-              </ul>
-            </nav>
-          </div>
+          
         </div>
+      </div>
 
-    </div>
+  </div>
 
   <!-- Scripts -->
   <!-- Bootstrap core JavaScript -->

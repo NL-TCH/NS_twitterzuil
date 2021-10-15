@@ -70,7 +70,8 @@ textarea{
     border: 2px solid #eee;
     outline: none;
     padding-left: 20px;
-    line-height: 50px;
+    padding-top: 10px;
+    line-height: normal;
     margin-bottom: 40px;
 }
 textarea:focus{
@@ -104,15 +105,16 @@ textarea:focus{
                       <div class="row">
                         <div class="col-md-12">
                           <div class="banner-caption">
-                            <h4>Welkom, type hier uw <em>NS Klacht</em>.</h4>
-                            <span>Gebruik bij uw klacht AUB netjes taalgebruik</span>
+                            <h4>Welkom, type hier uw <em>NS review</em>.</h4>
+                            <span>Gebruik bij uw review AUB netjes taalgebruik</span>
                             <form action="#" method="post" id="klachtform">
                             </br>
-                                <label>Titel</label><input type="text" name="Titel" placeholder="Bijvoorbeeld: Vuile toiletten"/>
-                                <h6>Bericht</h6>
-                                <textarea rows=104" cols="25" name="Klacht" placeholder="Bijvoorbeeld: Er zijn veel vuile toiletten bij de NS"></textarea>
+                              <label>Naam</label><input type="text" name="Name" placeholder="Bijvoorbeeld: Jeff"/>
+                                <label>Titel (max 40 tekens)</label><input type="text" name="Titel" placeholder="Bijvoorbeeld: Vuile toiletten" maxlength="40" required/>
+                                <h6>Bericht (max 140 tekens)</h6>
+                                <textarea rows=104 cols="25" name="Klacht" placeholder="Bijvoorbeeld: Er zijn veel vuile toiletten bij de NS&#10;(Graag max 3 enters gebruiken)" maxlength="140" required></textarea>
                                 </br>
-                                <input type="submit" name="btn" value="Submit klacht">
+                                <input type="submit" name="btn" value="Submit review">
                                 </div>
                                 
                             </form>

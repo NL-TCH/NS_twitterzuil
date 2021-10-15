@@ -10,6 +10,6 @@ RUN ls
 RUN whoami
 RUN python -m pip install -r /usr/src/app/requirements.txt
 
-EXPOSE 443
+EXPOSE 8085
 
 CMD ["python", "-u", "main.py"]

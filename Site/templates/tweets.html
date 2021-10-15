@@ -1,0 +1,19 @@
+<div id="load" class="load">
+    <section class="services">
+        <div class="container-fluid">
+          <div class="row">
+                {% for naam,titel,klacht in var1 %}
+                    <div class="col-md-4">
+                        <div class="service-item first-item" style="cursor: pointer; height: 450px">
+                            <div class="icon"></div>
+                            <h2>{{ titel }}</h2>
+                            <br />
+                            <h3><b>{{ naam }}:</b> {{ klacht }}</h3>
+                            </p>
+                        </div>
+                    </div> 
+                {% endfor %}
+            </div>   
+        </div> 
+    </section>
+</div>

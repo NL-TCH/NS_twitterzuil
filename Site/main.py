@@ -1,16 +1,24 @@
 from flask import Flask, redirect, url_for, render_template, request, session
+from turbo_flask import Turbo
+turbo = Turbo()
+import time, threading,sys,random
+
 from static import functions
 app = Flask(__name__)
-
+turbo.init_app(app)
 
 @app.route("/", methods=["POST", "GET"])
 def klachten():
     if request.method =='POST':
+        Naam = request.form['Name']
+        if Naam =="":
+            Naam='anoniem'
         Titel = request.form['Titel']
         Klacht = request.form['Klacht']
         Titel = Titel.replace("'","''")
+        Naam = Naam.replace("'","''")
         Klacht = Klacht.replace("'","''")
-        functions.moderator(Titel,Klacht)
+        functions.moderator(Naam,Titel,Klacht)
         return render_template('bedankt.html')
 
     elif request.method =='GET':
@@ -160,6 +168,67 @@ def submit():
             print()
         functions.moderatie_toepassen(total)
         return redirect(url_for('moderator'))
+
+@app.route("/statistieken/woordenfiltering",methods=['GET', 'POST'])
+def woordenfiltering():
+    """ Session control"""
+    if not session.get('logged_in'):
+        return redirect(url_for('login'))
+    else:
+        if request.method == 'POST':
+            if session['logged_in']:
+                gegevens=functions.woordenfiltering_ophalen()
+                gegevens2=functions.statistieken_ophalen()
+                return render_template('woordenfiltering_statistics.html',gegevens=gegevens,gegevens2=gegevens2)
+        if session['logged_in']:
+            gegevens=functions.woordenfiltering_ophalen()
+            gegevens2=functions.statistieken_ophalen()
+            return render_template('woordenfiltering_statistics.html',gegevens=gegevens,gegevens2=gegevens2)
+
+@app.route("/voorkeuren",methods=['GET', 'POST'])
+def voorkeuren():
+    """ Session control"""
+    if not session.get('logged_in'):
+        return redirect(url_for('login'))
+    else:
+        if request.method == 'POST':
+        
+            if session['logged_in']:
+                print(request.form)
+                if request.form['toevoegen/verwijderen'] =='toevoegen':
+                    scheldwoord=request.form["filterwoord"]
+                    functions.filterwoorden_toevoegen(scheldwoord.lower())
+                elif request.form['toevoegen/verwijderen'] == 'verwijderen':
+                    scheldwoord=request.form["category"]
+                    functions.filterwoorden_verwijderen(scheldwoord.lower())
+                # gegevens=functions.ophalen_voorkeuren()
+                # return render_template('voorkeuren.html',gegevens=gegevens)
+                return redirect(url_for('voorkeuren'))
+        if session['logged_in']:
+            gegevens=functions.ophalen_voorkeuren()
+            return render_template('voorkeuren.html',gegevens=gegevens)
+
+
+@app.route("/twitter", methods=['GET', 'POST'])
+def twitter():
+    return render_template('twitterboard.html')
+
+
+@app.context_processor
+def inject_load():
+    tweets=functions.tweets_ophalen()
+    return {'var1': tweets[:]}
+
+@app.before_first_request
+def before_first_request():
+    threading.Thread(target=update_load).start()
+
+def update_load():
+    with app.app_context():
+        while True:
+            time.sleep(5)
+            turbo.push(turbo.replace(render_template('tweets.html'), 'load'))
+       
 if __name__ == "__main__":
     app.secret_key = "123"
-    app.run(debug=True,host='0.0.0.0',port=8080)
+    app.run(debug=True,host='0.0.0.0',port=8085)
