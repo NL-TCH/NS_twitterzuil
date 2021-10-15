@@ -1,6 +1,7 @@
 import psycopg2 as sql
+import psycopg2.extras
 
-conn = sql.connect('host=10.27.3.100 user=NS_User password=NS_Password dbname=NS_Database')
+conn = sql.connect('host=127.0.0.1 user=NS_User password=NS_Password dbname=NS_Database')
 cursor = conn.cursor()
 
 def moderator(Naam,Titel, Klacht):
@@ -113,4 +114,35 @@ def filterwoorden_verwijderen(woord):
     conn.commit()
 
 def statistieken_ophalen():
-    cursor.execute(f'')
+    cursor.execute(f'''select status from klachten where status = 0''')
+    conn.commit()
+    gegevens0 =cursor.fetchall()
+    status0=len(gegevens0)
+    cursor.execute(f'''select status from klachten where status = 1''')
+    conn.commit()
+    gegevens1 =cursor.fetchall()
+    status1=len(gegevens1)
+    cursor.execute(f'''select status from klachten where status = 2''')
+    conn.commit()
+    gegevens2 =cursor.fetchall()
+    status2=len(gegevens2)
+    cursor.execute(f'''select status from klachten where status = 3''')
+    conn.commit()
+    gegevens3 =cursor.fetchall()
+    status3=len(gegevens3)
+    status =[status0,status1,status2,status3]
+    return status
+
+def tweets_ophalen():
+    #cursor = conn.cursor(cursor_factory = psycopg2.extras.RealDictCursor)
+    cursor.execute(f'''SELECT naam, titel, klacht FROM klachten where status = '2' ORDER BY id desc limit 6''')
+    conn.commit()
+
+    tweets = cursor.fetchall()
+    naam = [x[0] for x in tweets]
+    titel = [x[1] for x in tweets]
+    klacht = [x[2] for x in tweets]
+    tweet_list = [list(a) for a in zip(naam,titel,klacht)]
+    return tweet_list
+
+statistieken_ophalen()

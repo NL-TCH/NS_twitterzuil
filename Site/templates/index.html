@@ -70,7 +70,8 @@ textarea{
     border: 2px solid #eee;
     outline: none;
     padding-left: 20px;
-    line-height: 50px;
+    padding-top: 10px;
+    line-height: normal;
     margin-bottom: 40px;
 }
 textarea:focus{
@@ -109,9 +110,9 @@ textarea:focus{
                             <form action="#" method="post" id="klachtform">
                             </br>
                               <label>Naam</label><input type="text" name="Name" placeholder="Bijvoorbeeld: Jeff"/>
-                                <label>Titel</label><input type="text" name="Titel" placeholder="Bijvoorbeeld: Vuile toiletten" required/>
+                                <label>Titel (max 40 tekens)</label><input type="text" name="Titel" placeholder="Bijvoorbeeld: Vuile toiletten" maxlength="40" required/>
                                 <h6>Bericht (max 140 tekens)</h6>
-                                <textarea rows=104 cols="25" name="Klacht" placeholder="Bijvoorbeeld: Er zijn veel vuile toiletten bij de NS" maxlength="140" required></textarea>
+                                <textarea rows=104 cols="25" name="Klacht" placeholder="Bijvoorbeeld: Er zijn veel vuile toiletten bij de NS&#10;(Graag max 3 enters gebruiken)" maxlength="140" required></textarea>
                                 </br>
                                 <input type="submit" name="btn" value="Submit review">
                                 </div>
