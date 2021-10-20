@@ -1,5 +1,5 @@
 
-name: CI
+name: NS-stackbuilder
 
 # Controls when the workflow will run
 on:
@@ -44,7 +44,7 @@ jobs:
           push: true
           tags: |
             dockerteun/ns:latest
-            dockerteun/ns:${{ GITHUB_RUN_NUMBER }}
+            dockerteun/ns:{{ GITHUB_RUN_NUMBER }}
     
   build:
     name: trigger jenkins
