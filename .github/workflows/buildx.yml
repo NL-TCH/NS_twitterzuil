@@ -1,4 +1,3 @@
-# This is a basic workflow to help you get started with Actions
 
 name: CI
 
@@ -16,7 +15,8 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  multi:
+  buildx:
+    name: builx build & push image
     runs-on: ubuntu-latest
     steps:
       -
@@ -44,4 +44,17 @@ jobs:
           push: true
           tags: |
             dockerteun/ns:latest
-            dockerteun/ns:arm
+            dockerteun/ns:${{ GITHUB_RUN_NUMBER }}
+    
+  build:
+    name: trigger jenkins
+    runs-on: ubuntu-latest
+    steps:
+    - name: trigger single Job
+      uses: appleboy/jenkins-action@master
+      with:
+        url: "http://jenkins.teunisdev.nl"
+        user: "Teunis"
+        token: ${{ secrets.JENKINS_TOKEN }}
+        job: "swarm deploy"
+ 
