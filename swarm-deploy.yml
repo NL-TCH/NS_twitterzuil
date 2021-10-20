@@ -1,0 +1,19 @@
+version: '3'
+services:
+  site:
+    container_name: NS_Site
+    environment:
+      PYTHONBUFFERED: 0
+    build: Site/.
+    image: dockerteun/ns:latest
+    ports:
+      - 8085:8085
+    networks:
+      NS_NW:
+        ipv4_address: 10.27.3.200
+    restart: unless-stopped
+networks:
+  NS_NW:
+    driver: overlay
+    config:
+      - subnet: 10.27.3.0/16

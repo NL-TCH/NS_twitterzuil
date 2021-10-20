@@ -43,9 +43,7 @@ services:
     environment:
       PYTHONBUFFERED: 0
     build: Site/.
-    depends_on:
-      database:
-        condition: service_healthy
+    image: dockerteun/ns:latest
     ports:
       - 8085:8085
     networks:
