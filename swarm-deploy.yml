@@ -15,5 +15,4 @@ services:
 networks:
   NS_NW:
     driver: overlay
-    config:
       - subnet: 10.27.3.0/16
