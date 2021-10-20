@@ -2,7 +2,9 @@ FROM python:3.9
 
 COPY . /usr/src/app
 WORKDIR /usr/src/app
-RUN python -m pip install -r requirements.txt
+RUN ls
+RUN pwd
+RUN python -m pip install -r Site/requirements.txt
 
 EXPOSE 8085
 
