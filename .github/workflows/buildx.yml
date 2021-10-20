@@ -44,17 +44,15 @@ jobs:
           push: true
           tags: |
             dockerteun/ns:latest
-            dockerteun/ns:{{ GITHUB_RUN_NUMBER }}
+            dockerteun/ns:${{ env.GITHUB_RUN_NUMBER }}
     
-  build:
-    name: trigger jenkins
-    runs-on: ubuntu-latest
-    steps:
-    - name: trigger single Job
-      uses: appleboy/jenkins-action@master
-      with:
-        url: "http://jenkins.teunisdev.nl"
-        user: "Teunis"
-        token: ${{ secrets.JENKINS_TOKEN }}
-        job: "swarm deploy"
+
+      -
+        name: trigger single Job
+        uses: appleboy/jenkins-action@master
+        with:
+          url: "http://jenkins.teunisdev.nl"
+          user: "Teunis"
+          token: ${{ secrets.JENKINS_TOKEN }}
+          job: "swarm deploy"
  
