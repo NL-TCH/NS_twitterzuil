@@ -60,8 +60,6 @@ volumes:
 
 networks:
   NS_NW:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 10.27.3.0/16
-          gateway: 10.27.3.1
+    driver: overlay
+    config:
+      - subnet: 10.27.3.0/16
