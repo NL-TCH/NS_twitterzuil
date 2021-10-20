@@ -36,10 +36,10 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
         name: test
-        run: echo ${{ GITHUB_RUN_ID }}
+        run: echo ${{ env.GITHUB_RUN_ID }}
       -
         name: test2
-        run: echo ${{ GITHUB_RUN_NUMBER }}
+        run: echo ${{ env.GITHUB_RUN_NUMBER }}
       -
         name: Build and push
         uses: docker/build-push-action@v2
