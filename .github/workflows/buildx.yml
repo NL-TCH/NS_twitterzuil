@@ -44,7 +44,7 @@ jobs:
           push: true
           tags: |
             dockerteun/ns:latest
-            dockerteun/ns:${{ env.GITHUB_RUN_NUMBER }}
+            dockerteun/ns:${{ GITHUB_RUN_NUMBER }}
     
 
       -
