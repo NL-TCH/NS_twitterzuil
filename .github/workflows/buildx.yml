@@ -35,6 +35,12 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
+        name: test
+        run: echo ${{ GITHUB_RUN_ID }}
+      -
+        name: test2
+        run: echo ${{ GITHUB_RUN_NUMBER }}
+      -
         name: Build and push
         uses: docker/build-push-action@v2
         with:
@@ -44,7 +50,7 @@ jobs:
           push: true
           tags: |
             dockerteun/ns:latest
-            dockerteun/ns:${{ GITHUB_RUN_NUMBER }}
+            dockerteun/ns:${{ env.GITHUB_RUN_NUMBER }}
     
 
       -
