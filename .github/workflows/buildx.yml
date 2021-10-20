@@ -39,7 +39,7 @@ jobs:
         run: echo ${{ env.GITHUB_RUN_ID }}
       -
         name: test2
-        run: echo ${{ env.GITHUB_RUN_NUMBER }}
+        run: echo ${{ github.run_number }}
       -
         name: Build and push
         uses: docker/build-push-action@v2
@@ -50,7 +50,7 @@ jobs:
           push: true
           tags: |
             dockerteun/ns:latest
-            dockerteun/ns:${{ env.GITHUB_RUN_NUMBER }}
+            dockerteun/ns:${{ github.run_number }}
     
 
       -
