@@ -4,7 +4,7 @@ COPY Site/. /usr/src/app
 WORKDIR /usr/src/app
 RUN ls
 RUN pwd
-RUN python -m pip install -r Site/requirements.txt
+RUN python -m pip install -r requirements.txt
 
 EXPOSE 8085
 
