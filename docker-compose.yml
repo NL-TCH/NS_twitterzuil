@@ -42,7 +42,6 @@ services:
     container_name: NS_Site
     environment:
       PYTHONBUFFERED: 0
-    build: Site/.
     image: dockerteun/ns:latest
     ports:
       - 8085:8085
