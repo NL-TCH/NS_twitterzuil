@@ -1,6 +1,7 @@
 version: '3'
 services:
   site:
+    privileged: true
     container_name: NS_Site
     environment:
       PYTHONBUFFERED: 0
