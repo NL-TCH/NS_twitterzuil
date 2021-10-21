@@ -1,6 +1,6 @@
 FROM python:3.9
 
-COPY . /usr/src/app
+COPY Site/. /usr/src/app
 WORKDIR /usr/src/app
 RUN ls
 RUN pwd
