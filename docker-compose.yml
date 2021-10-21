@@ -10,18 +10,16 @@ services:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     healthcheck:
       test: "exit 0"
-    # ports:
-    #   - 5432:5432
-    networks:
-      NS_NW:
-        ipv4_address: 10.27.3.100
+    ports:
+      - 5432:5432
+
     restart: unless-stopped
 
   pgadmin:
     container_name: NS_Database_GUI
 #    image: dpage/pgadmin4:5.7
     image: biarms/pgadmin4
-
+    restart: unless-stopped
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-teunis@teunis.dev}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
@@ -33,10 +31,7 @@ services:
     ports:
       #- 5050:80
       - 5050:5050
-    networks:
-      NS_NW:
-        ipv4_address: 10.27.3.101
-    restart: unless-stopped
+
 
   site:
     container_name: NS_Site
@@ -45,16 +40,12 @@ services:
     image: dockerteun/ns:latest
     ports:
       - 8085:8085
-    networks:
-      NS_NW:
-        ipv4_address: 10.27.3.200
     restart: unless-stopped
+
 
 
 volumes:
   database-data:
   pgadmin:
 
-networks:
-  NS_NW:
-    driver: overlay
+

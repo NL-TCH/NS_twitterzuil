@@ -9,10 +9,3 @@ services:
     image: dockerteun/ns:latest
     ports:
       - 8085:8085
-    networks:
-      NS_NW:
-        ipv4_address: 10.27.3.200
-    restart: unless-stopped
-networks:
-  NS_NW:
-    driver: overlay
