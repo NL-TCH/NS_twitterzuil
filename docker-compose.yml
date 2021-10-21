@@ -59,4 +59,4 @@ volumes:
 networks:
   NS_NW:
     driver: overlay
-      - subnet: 10.27.3.0/16
+        subnet: 10.27.3.0/16
