@@ -52,7 +52,7 @@ https://templatemo.com/tm-529-ramayana
                         <div class="col-md-12">
                           <div class="banner-caption">
                             <h4>Dashboard</h4>
-                            <span><a href="/logout">Logout</a></span>
+                            <span>Welkom {{ naam }}</span>
                             <p></p>
                             
                           </div>
@@ -83,17 +83,21 @@ https://templatemo.com/tm-529-ramayana
                   <span class="opener">Statistieken</span>
                   <ul>
                     <li><a href="/statistieken/woordenfiltering">Woordenfiltering</a></li>
-                  <!--<li><a href="#">Second Sub Menu</a></li>
-                    <li><a href="#">Third Sub Menu</a></li>-->
                   </ul>
                 </li>
-                <li><a href="/voorkeuren">Voorkeuren</a></li>
+                <li>
+                  <span class="opener">Voorkeuren</span>
+                  <ul>
+                    <li><a href="/voorkeuren/bot">Voorkeuren bot</a></li>
+                    <li><a href="/voorkeuren/gebruikers">Voorkeuren gebruikers</a></li>
+                  </ul>
+                </li>
                 <li><a href="/twitter">Tweet display</a></li>
               </ul>
             </nav>
             <footer id="footer">
-              <p class="copyright">Log Uit
-              <br><a rel="nofollow"  href="/logout">Logout</a></p>
+              <p class="copyright">Ingelogd als {{ naam }}
+              <br><a rel="nofollow"  href="/logout">Log Uit</a></p>
             </footer>
 
             

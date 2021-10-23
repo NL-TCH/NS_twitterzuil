@@ -1,11 +1,28 @@
 import psycopg2 as sql
 import psycopg2.extras
 
-conn = sql.connect('host=192.168.1.52 user=NS_User password=NS_Password dbname=NS_Database')
+conn = sql.connect('host=localhost user=NS_User password=NS_Password dbname=NS_Database')
 cursor = conn.cursor()
 
+def login(gebruikersnaam, wachtwoord):
+    cursor.execute(f'''SELECT * from users where username = '{gebruikersnaam}' and password = '{wachtwoord}' and username != 'bot' ''')
+    conn.commit()
+    output = cursor.fetchall()
+    if output ==[]:
+        return 'false-credentials'
+    elif output !=[]: 
+        cursor2 = conn.cursor()
+        cursor2.execute(f'''SELECT * from users where username = '{gebruikersnaam}' and password = '{wachtwoord}' and status='1' ''')
+        conn.commit()
+        output2=cursor2.fetchall()
+        if output2 ==[]:
+            return 'false-status'
+        elif output2 != []:
+            return 'true-status'
+
+
 def moderator(Naam,Titel, Klacht):
-    cursor.execute('SELECT woorden FROM Moderatie')
+    cursor.execute('SELECT woorden FROM moderatie')
     Titel_split = Titel.split(' ')
     Klacht_split = Klacht.split(' ')
     records = cursor.fetchall()
@@ -14,37 +31,30 @@ def moderator(Naam,Titel, Klacht):
     for rows in records:
         clean = ''.join(rows)
         for words in Titel_split:
-            print(words.lower())
-            print(clean)
             if words.lower() == clean:
                 Titel_status= False
                 cursor.execute(f'''UPDATE moderatie set frequentie = frequentie +1 where woorden = '{clean}' ''')
                 conn.commit()
                 Scheldwoord=clean
-                print(f'>>Titel>>{words} is equal to {clean}')
         for words in Klacht_split:
-            print(words.lower())
             if words.lower() == clean:
                 Klacht_status= False
                 Scheldwoord=clean
                 cursor.execute(f'''UPDATE moderatie set frequentie = frequentie +1 where woorden = '{clean}' ''')
                 conn.commit()
-                print(f'>>Klacht>>{words} is equal to {clean}')
     #bot, scheldwoord = 0
     #clean, nieuw = 1
     #clean, geaccepteerd = 2
     #clean, niet geaccepteerd = 3
     if Titel_status == False or Klacht_status == False:
-        cursor.execute(f'''INSERT INTO klachten (naam,titel,klacht,scheldwoord,status) VALUES ('{Naam}','{Titel}','{Klacht}','{Scheldwoord}', 0);''')
+        cursor.execute(f'''INSERT INTO klachten (naam,titel,klacht,scheldwoord,moderator,status) VALUES ('{Naam}','{Titel}','{Klacht}','{Scheldwoord}','1', 0);''')
         conn.commit()
     elif Titel_status != False and Klacht_status != False:
         cursor.execute(f'''INSERT INTO klachten (naam,titel,klacht,status) VALUES ('{Naam}','{Titel}','{Klacht}', 1);''')
         conn.commit()
-    else:
-        print('error')
 
 def ophalen_moderatie():
-    cursor.execute(f'''SELECT titel, klacht FROM klachten where status = '1' ORDER BY id limit 5''')
+    cursor.execute(f'''SELECT titel, klacht FROM klachten where status = '1' ORDER BY klacht_id limit 5''')
     conn.commit()
     gegevens = cursor.fetchall()
     titels = [x[0] for x in gegevens]
@@ -53,36 +63,50 @@ def ophalen_moderatie():
     return combinatie
 
 def ophalen_moderated():
-    cursor.execute(f'''SELECT titel, klacht, scheldwoord, status FROM klachten where status NOT IN ('1') ORDER BY id DESC limit 5''')
+    #cursor.execute(f'''SELECT titel, klacht, scheldwoord, status FROM klachten where status NOT IN ('1') ORDER BY klacht_id DESC limit 5''')
+    cursor.execute(f'''
+    select 
+        klachten.titel,
+        klachten.klacht,
+        klachten.scheldwoord,
+        users.username,
+        klachten.status
+    from klachten 
+    INNER JOIN users on moderator=user_id
+    where klachten.status NOT in ('1') ORDER BY klacht_id DESC limit 5
+    ''')
     conn.commit()
     gegevens =cursor.fetchall()
     titels = [x[0] for x in gegevens]
     klachten = [x[1] for x in gegevens]
     scheldwoorden = [x[2] for x in gegevens]
-    status = [x[3] for x in gegevens]
-    combinatie = [list(a) for a in zip(titels,klachten,scheldwoorden,status)]
+    moderator = [x[3] for x in gegevens]
+    status = [x[4] for x in gegevens]
+    combinatie = [list(a) for a in zip(titels,klachten,scheldwoorden,moderator,status)]
     return combinatie
 
-def moderatie_toepassen(total):
+def moderatie_toepassen(total,user):
     for keuze in total:
         #2.0
         if (int(keuze.replace('.',''))% 2) == 0:
             cursor.execute(f''' UPDATE klachten
-                                SET status = 3
-                                WHERE id IN (SELECT id
+                                SET status = 3,
+                                    moderator = (SELECT user_id from users WHERE username ='{user}')
+                                WHERE klacht_id IN (SELECT klacht_id
                                 FROM klachten
                                 WHERE status =1
-                                ORDER BY id
+                                ORDER BY klacht_id
                                 LIMIT 1);''')
             conn.commit()
         #2.1
         elif ((int(keuze.replace('.',''))% 2) == 0) ==False:
             cursor.execute(f''' UPDATE klachten
-                                SET status = 2
-                                WHERE id IN (SELECT id
+                                SET status = 2,
+                                    moderator = (SELECT user_id from users WHERE username ='{user}')
+                                WHERE klacht_id IN (SELECT klacht_id
                                 FROM klachten
                                 WHERE status =1
-                                ORDER BY id
+                                ORDER BY klacht_id
                                 LIMIT 1);''')
             conn.commit()
 
@@ -134,8 +158,7 @@ def statistieken_ophalen():
     return status
 
 def tweets_ophalen():
-    #cursor = conn.cursor(cursor_factory = psycopg2.extras.RealDictCursor)
-    cursor.execute(f'''SELECT naam, titel, klacht FROM klachten where status = '2' ORDER BY id desc limit 6''')
+    cursor.execute(f'''SELECT naam, titel, klacht FROM klachten where status = '2' ORDER BY klacht_id desc limit 6''')
     conn.commit()
 
     tweets = cursor.fetchall()
@@ -145,4 +168,34 @@ def tweets_ophalen():
     tweet_list = [list(a) for a in zip(naam,titel,klacht)]
     return tweet_list
 
-statistieken_ophalen()
+def ophalen_gebruikers():
+    cursor.execute('''SELECT username, status from users where username != 'bot' ''')
+    conn.commit()
+    gegevens =cursor.fetchall()
+    gebruikers = [x[0] for x in gegevens]
+    status = [x[1] for x in gegevens]
+    combinatie = [list(a) for a in zip(gebruikers,status)]
+    return combinatie
+
+def gebruikers_toevoegen(gebruikersnaam,wachtwoord):
+    cursor.execute(f'''INSERT INTO users (username,password,status) VALUES('{gebruikersnaam}','{wachtwoord}','1'); ''')
+    conn.commit()
+
+def gebruikers_verwijderen(gebruikersnaam):
+    cursor.execute(f'''delete from users where username = '{gebruikersnaam}'; ''')
+    conn.commit()
+
+def gebruikers_wijzigen(gebruikersnaam):
+    cursor.execute(f'''SELECT status from users where username = '{gebruikersnaam}' ''')
+    conn.commit()
+    output = cursor.fetchall()
+    if output ==[(1,)]:
+        cursor.execute(f'''UPDATE users
+                            SET status =0
+                            WHERE username = '{gebruikersnaam}'; ''')
+        conn.commit()
+    if output ==[(0,)]:
+        cursor.execute(f'''UPDATE users
+                            SET status =1
+                            WHERE username = '{gebruikersnaam}'; ''')
+        conn.commit()
