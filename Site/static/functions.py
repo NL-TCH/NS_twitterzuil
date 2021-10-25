@@ -207,10 +207,8 @@ def gebruikers_statistieken_ophalen():
     moderator_id = [x[1] for x in statistieken]
     gemodereerd = [x[2] for x in statistieken]
     statistieken== [list(a) for a in zip(naam,moderator_id,gemodereerd)]
-    print(statistieken[0])
     return statistieken
-
-gebruikers_statistieken_ophalen()
+    
 def tweets_ophalen():
     cursor.execute(f'''SELECT naam, titel, klacht FROM klachten where status = '2' ORDER BY klacht_id desc limit 6''')
     conn.commit()
