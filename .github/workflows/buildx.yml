@@ -60,5 +60,5 @@ jobs:
           url: "http://jenkins.teunisdev.nl"
           user: "Teunis"
           token: ${{ secrets.JENKINS_TOKEN }}
-          job: "swarm deploy"
+          job: "NS-Docker-Deploy"
  
