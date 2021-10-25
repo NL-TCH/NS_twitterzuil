@@ -38,6 +38,7 @@ services:
     environment:
       PYTHONBUFFERED: 0
     image: dockerteun/ns:latest
+    privileged: true
     ports:
       - 8085:8085
     restart: unless-stopped
