@@ -188,6 +188,20 @@ def woordenfiltering():
             gegevens2=functions.statistieken_ophalen()
             return render_template('woordenfiltering_statistics.html',gegevens=gegevens,gegevens2=gegevens2,naam= session['gebruiker'])
 
+@app.route("/statistieken/gebruikers",methods=['GET', 'POST'])
+def gebruikers():
+    """ Session control"""
+    if not session.get('logged_in'):
+        return redirect(url_for('login'))
+    else:
+        if request.method == 'POST':
+            if session['logged_in']:
+                gegevens=functions.gebruikers_statistieken_ophalen()
+                return render_template('gebruikers_statistics.html',gegevens=gegevens,naam= session['gebruiker'])
+        if session['logged_in']:
+            gegevens=functions.gebruikers_statistieken_ophalen()
+            return render_template('gebruikers_statistics.html',gegevens=gegevens,naam= session['gebruiker'])
+
 @app.route("/voorkeuren/bot",methods=['GET', 'POST'])
 def voorkeuren():
     """ Session control"""

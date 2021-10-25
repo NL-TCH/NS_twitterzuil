@@ -17,8 +17,8 @@ services:
 
   pgadmin:
     container_name: NS_Database_GUI
-    image: dpage/pgadmin4:5.7 #amd64
-    #image: biarms/pgadmin4 #armv7
+    #image: dpage/pgadmin4:5.7 #amd64
+    image: biarms/pgadmin4 #armv7
     restart: unless-stopped
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-teunis@teunis.dev}
@@ -29,18 +29,19 @@ services:
       database:
         condition: service_healthy
     ports:
-      - 5050:80 #amd64
-     # - 5050:5050 #armv7
+    #  - 5050:80 #amd64
+      - 5050:5050 #armv7
 
 
-  # site:
-  #   container_name: NS_Site
-  #   environment:
-  #     PYTHONBUFFERED: 0
-  #   image: dockerteun/ns:latest
-  #   ports:
-  #     - 8085:8085
-  #   restart: unless-stopped
+  site:
+    container_name: NS_Site
+    environment:
+      PYTHONBUFFERED: 0
+    image: dockerteun/ns:latest
+    privileged: true
+    ports:
+      - 8085:8085
+    restart: unless-stopped
 
 
 

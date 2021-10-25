@@ -157,6 +157,60 @@ def statistieken_ophalen():
     status =[status0,status1,status2,status3]
     return status
 
+def gebruikers_statistieken_ophalen():
+    query='''
+    SELECT users.username,klachten.moderator, COUNT(*) AS counted
+    FROM   klachten
+    INNER JOIN users on moderator=user_id
+    WHERE  moderator = (select mode() within group (order by moderator) as moderator
+                        from klachten
+                        group by moderator
+                        order by moderator DESC
+                        offset 0
+                        limit 1)
+                        
+    or moderator =		(select mode() within group (order by moderator) as moderator
+                        from klachten
+                        group by moderator
+                        order by moderator DESC
+                        offset 1
+                        limit 1)
+                        
+    or moderator =		(select mode() within group (order by moderator) as moderator
+                        from klachten
+                        group by moderator
+                        order by moderator DESC
+                        offset 1
+                        limit 1)
+                        
+    or moderator =		(select mode() within group (order by moderator) as moderator
+                        from klachten
+                        group by moderator
+                        order by moderator DESC
+                        offset 1
+                        limit 1)
+                        
+    or moderator =		(select mode() within group (order by moderator) as moderator
+                        from klachten
+                        group by moderator
+                        order by moderator DESC
+                        offset 1
+                        limit 1)
+    AND    moderator IS NOT NULL
+    GROUP  BY moderator,username
+    ORDER  BY counted DESC, moderator
+    '''
+    cursor.execute(query)
+    conn.commit()
+    statistieken=cursor.fetchall()
+    naam = [x[0] for x in statistieken]
+    moderator_id = [x[1] for x in statistieken]
+    gemodereerd = [x[2] for x in statistieken]
+    statistieken== [list(a) for a in zip(naam,moderator_id,gemodereerd)]
+    print(statistieken[0])
+    return statistieken
+
+gebruikers_statistieken_ophalen()
 def tweets_ophalen():
     cursor.execute(f'''SELECT naam, titel, klacht FROM klachten where status = '2' ORDER BY klacht_id desc limit 6''')
     conn.commit()
