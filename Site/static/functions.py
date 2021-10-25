@@ -1,7 +1,7 @@
 import psycopg2 as sql
 import psycopg2.extras
 
-conn = sql.connect('host=localhost user=NS_User password=NS_Password dbname=NS_Database')
+conn = sql.connect('host=192.168.1.52 user=NS_User password=NS_Password dbname=NS_Database')
 cursor = conn.cursor()
 
 def login(gebruikersnaam, wachtwoord):
