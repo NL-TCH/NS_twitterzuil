@@ -34,11 +34,14 @@ def login():
         name = request.form['username']
         passw = request.form['password']
         try:
-            if name == 'admin' and passw == 'admin':
-                session['logged_in'] = True
-                return redirect(url_for('dashboard'))
-            else:
+            if functions.login(name,passw) =='false-credentials':
                 return render_template('login.html', error='Onjuiste credentials')
+            elif functions.login(name,passw) =='false-status':
+                return render_template('login.html', error='Account inactief')
+            elif functions.login(name,passw) =='true-status':
+                session['logged_in'] = True
+                session['gebruiker'] = name
+                return redirect(url_for('dashboard'))
         except:
             return render_template('login.html', error='Onjuiste credentials')
         
@@ -52,9 +55,9 @@ def dashboard():
     else:
         if request.method == 'POST':
             if session['logged_in']:
-                return render_template('dashboard.html')
+                return render_template('dashboard.html',naam= session['gebruiker'])
         if session['logged_in']:
-            return render_template('dashboard.html')
+            return render_template('dashboard.html',naam= session['gebruiker'])
         
 
 @app.route("/logout")
@@ -99,7 +102,7 @@ def moderator():
                 elif len(gegevens)==5:
                     regels =5
                 
-                return render_template('moderatie.html', gegevens=functions.ophalen_moderatie(),gegevens2=functions.ophalen_moderated(),regels=regels, regels2=regels2)
+                return render_template('moderatie.html', gegevens=functions.ophalen_moderatie(),gegevens2=functions.ophalen_moderated(),regels=regels, regels2=regels2,naam= session['gebruiker'])
         if session['logged_in']:
             gegevens=functions.ophalen_moderatie()
             gegevens2 = functions.ophalen_moderated()
@@ -129,7 +132,7 @@ def moderator():
             elif len(gegevens)==5:
                 regels =5
             
-            return render_template('moderatie.html', gegevens=functions.ophalen_moderatie(),gegevens2=functions.ophalen_moderated(),regels=regels, regels2=regels2)
+            return render_template('moderatie.html', gegevens=functions.ophalen_moderatie(),gegevens2=functions.ophalen_moderated(),regels=regels, regels2=regels2,naam= session['gebruiker'])
     
 
 @app.route('/submit', methods=["POST","GET"])
@@ -166,7 +169,7 @@ def submit():
                 total.append(Keuze5)
         except KeyError:
             print()
-        functions.moderatie_toepassen(total)
+        functions.moderatie_toepassen(total,user=session['gebruiker'])
         return redirect(url_for('moderator'))
 
 @app.route("/statistieken/woordenfiltering",methods=['GET', 'POST'])
@@ -179,13 +182,27 @@ def woordenfiltering():
             if session['logged_in']:
                 gegevens=functions.woordenfiltering_ophalen()
                 gegevens2=functions.statistieken_ophalen()
-                return render_template('woordenfiltering_statistics.html',gegevens=gegevens,gegevens2=gegevens2)
+                return render_template('woordenfiltering_statistics.html',gegevens=gegevens,gegevens2=gegevens2,naam= session['gebruiker'])
         if session['logged_in']:
             gegevens=functions.woordenfiltering_ophalen()
             gegevens2=functions.statistieken_ophalen()
-            return render_template('woordenfiltering_statistics.html',gegevens=gegevens,gegevens2=gegevens2)
+            return render_template('woordenfiltering_statistics.html',gegevens=gegevens,gegevens2=gegevens2,naam= session['gebruiker'])
 
-@app.route("/voorkeuren",methods=['GET', 'POST'])
+@app.route("/statistieken/gebruikers",methods=['GET', 'POST'])
+def gebruikers():
+    """ Session control"""
+    if not session.get('logged_in'):
+        return redirect(url_for('login'))
+    else:
+        if request.method == 'POST':
+            if session['logged_in']:
+                gegevens=functions.gebruikers_statistieken_ophalen()
+                return render_template('gebruikers_statistics.html',gegevens=gegevens,naam= session['gebruiker'])
+        if session['logged_in']:
+            gegevens=functions.gebruikers_statistieken_ophalen()
+            return render_template('gebruikers_statistics.html',gegevens=gegevens,naam= session['gebruiker'])
+
+@app.route("/voorkeuren/bot",methods=['GET', 'POST'])
 def voorkeuren():
     """ Session control"""
     if not session.get('logged_in'):
@@ -203,10 +220,35 @@ def voorkeuren():
                     functions.filterwoorden_verwijderen(scheldwoord.lower())
                 # gegevens=functions.ophalen_voorkeuren()
                 # return render_template('voorkeuren.html',gegevens=gegevens)
-                return redirect(url_for('voorkeuren'))
+                return redirect(url_for('voorkeuren',naam= session['gebruiker']))
         if session['logged_in']:
             gegevens=functions.ophalen_voorkeuren()
-            return render_template('voorkeuren.html',gegevens=gegevens)
+            return render_template('voorkeuren.html',gegevens=gegevens,naam= session['gebruiker'])
+
+@app.route("/voorkeuren/gebruikers",methods=['GET', 'POST'])
+def voorkeuren_gebruikers():
+    """ Session control"""
+    if not session.get('logged_in'):
+        return redirect(url_for('login'))
+    else:
+        if request.method == 'POST':
+        
+            if session['logged_in']:
+                print(request.form)
+                if request.form['toevoegen/verwijderen'] =='toevoegen':
+                    gebruikersnaam=request.form["gebruikersnaam"]
+                    wachtwoord=request.form["wachtwoord"]
+                    functions.gebruikers_toevoegen(gebruikersnaam,wachtwoord)
+                elif request.form['toevoegen/verwijderen'] == 'verwijderen':
+                    gebruikersnaam=request.form["category1"]
+                    functions.gebruikers_verwijderen(gebruikersnaam)
+                elif request.form['toevoegen/verwijderen'] == 'wijzigen':
+                    gebruikersnaam=request.form["category2"]
+                    functions.gebruikers_wijzigen(gebruikersnaam)
+                return redirect(url_for('voorkeuren_gebruikers',naam= session['gebruiker']))
+        if session['logged_in']:
+            gegevens=functions.ophalen_gebruikers()
+            return render_template('voorkeuren gebruikers.html',gegevens=gegevens,naam= session['gebruiker'])
 
 
 @app.route("/twitter", methods=['GET', 'POST'])
