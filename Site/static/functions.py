@@ -1,6 +1,7 @@
 import psycopg2 as sql
 import twitter,datetime
 
+
 api = twitter.Api(consumer_key='G8M055F3K6LVIcn4Je6XGtyjc',
 consumer_secret='L6y0da736ownLW7QDsUi76sCjYxikdimUOLObA6w69CnbUlOCA',
 access_token_key='1445765872505655303-6Nw5KoA7ofuoIHeL9LgxJHAcIpPnjP',
@@ -230,8 +231,7 @@ def gebruikers_statistieken_ophalen():
     gemodereerd = [x[2] for x in statistieken]
     statistieken== [list(a) for a in zip(naam,moderator_id,gemodereerd)]
     return statistieken
-
-gebruikers_statistieken_ophalen()
+    
 def tweets_ophalen():
     cursor.execute(f'''SELECT naam, titel, klacht FROM klachten where status = '2' ORDER BY klacht_id desc limit 6''')
     conn.commit()
@@ -305,3 +305,4 @@ def check_timestamp():
     min_sec=divmod(difference.days * seconds_in_day + difference.seconds, 60)
     difference_min=min_sec[0]
     return difference_min
+
