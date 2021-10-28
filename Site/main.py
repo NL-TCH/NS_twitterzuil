@@ -259,7 +259,8 @@ def twitter():
 @app.context_processor
 def inject_load():
     tweets=functions.tweets_ophalen()
-    return {'var1': tweets[:]}
+    tijd=functions.check_timestamp()
+    return {'var1': tweets[:], 'var2':tijd}
 
 @app.before_first_request
 def before_first_request():
@@ -268,7 +269,7 @@ def before_first_request():
 def update_load():
     with app.app_context():
         while True:
-            time.sleep(5)
+            time.sleep(10)
             turbo.push(turbo.replace(render_template('tweets.html'), 'load'))
        
 if __name__ == "__main__":
