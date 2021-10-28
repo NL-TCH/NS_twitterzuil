@@ -2,7 +2,7 @@ version: '3'
 services:
   database:
     container_name: NS_Database
-    image: postgres:latest
+    image: postgres:9.6
     env_file:
       - database.env
     volumes:
