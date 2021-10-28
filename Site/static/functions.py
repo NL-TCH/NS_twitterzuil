@@ -1,5 +1,13 @@
 import psycopg2 as sql
-import psycopg2.extras
+import twitter,datetime
+
+
+api = twitter.Api(consumer_key='G8M055F3K6LVIcn4Je6XGtyjc',
+consumer_secret='L6y0da736ownLW7QDsUi76sCjYxikdimUOLObA6w69CnbUlOCA',
+access_token_key='1445765872505655303-6Nw5KoA7ofuoIHeL9LgxJHAcIpPnjP',
+access_token_secret='uBjBs8sFPyVNZLLaupNkpc1gJlWpAxgAkxZCFaPIkHD49')
+    
+timelist=[datetime.datetime(2021, 1, 1, 1, 1, 1, 111111)]
 
 conn = sql.connect('host=192.168.1.52 user=NS_User password=NS_Password dbname=NS_Database')
 cursor = conn.cursor()
@@ -109,6 +117,21 @@ def moderatie_toepassen(total,user):
                                 ORDER BY klacht_id
                                 LIMIT 1);''')
             conn.commit()
+            cursor.execute(f'''SELECT naam,titel,klacht
+            FROM klachten
+            WHERE status=2
+            ORDER BY klacht_id DESC
+			LIMIT 1;''')
+            conn.commit()
+            output=cursor.fetchall()
+            naam = [x[0] for x in output]
+            titel = [x[1] for x in output]
+            klacht = [x[2] for x in output]
+            combinatie = [list(a) for a in zip(naam,titel,klacht)]
+            print(combinatie[0])
+            print(combinatie[0][0])
+            tweet_sturen(combinatie[0][0],combinatie[0][1],combinatie[0][2])
+            set_timestamp()
 
 def woordenfiltering_ophalen():
     cursor.execute(f'''select * from moderatie ORDER BY frequentie DESC limit 5''')
@@ -251,3 +274,35 @@ def gebruikers_wijzigen(gebruikersnaam):
                             SET status =1
                             WHERE username = '{gebruikersnaam}'; ''')
         conn.commit()
+
+def tweet_sturen(username,titel,review):
+    bericht=f'''<{username}> reviewd de NS over: <{titel}>
+<{review}>'''
+    status = api.PostUpdate(bericht)
+    print(status.text)
+
+def set_timestamp():
+    timestamp = datetime.datetime.now()
+    timelist.append(timestamp)
+    #added current time to timelist
+    print(timelist[:])
+    difference=timelist[1]-timelist[0]
+    #calculated difference in seconds
+    print(difference)
+    seconds_in_day = 24 * 60 * 60
+    min_sec=divmod(difference.days * seconds_in_day + difference.seconds, 60)
+    difference_min=min_sec[0]
+    #calculated difference in minutes
+    del timelist[0]
+    #removed first time in list (the old timestamp)
+    return difference_min
+    #return int of minutes passed
+
+def check_timestamp():
+    timestamp = datetime.datetime.now()
+    difference=timestamp-timelist[0]
+    seconds_in_day = 24 * 60 * 60
+    min_sec=divmod(difference.days * seconds_in_day + difference.seconds, 60)
+    difference_min=min_sec[0]
+    return difference_min
+

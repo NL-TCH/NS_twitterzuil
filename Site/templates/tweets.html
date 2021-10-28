@@ -1,4 +1,5 @@
 <div id="load" class="load">
+    {% if var2 < 3 %}
     <section class="services">
         <div class="container-fluid">
           <div class="row">
@@ -16,4 +17,8 @@
             </div>   
         </div> 
     </section>
+    {% elif var2 >= 3 %}
+    <iframe src="https://gadgets.buienradar.nl/gadget/zoommap/?lat=52.09083&lng=5.12222&overname=2&zoom=8&naam=Utrecht&size=3&voor=0" scrolling=no width=550 height=512 frameborder=no></iframe>
+    <IFRAME SRC="//gadgets.buienradar.nl/gadget/forecastandstation/6260" NORESIZE SCROLLING=NO HSPACE=0 VSPACE=0 FRAMEBORDER=0 MARGINHEIGHT=0 MARGINWIDTH=0 WIDTH=300 HEIGHT=190></IFRAME>
+    {% endif %}
 </div>
