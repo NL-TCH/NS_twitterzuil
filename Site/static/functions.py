@@ -8,7 +8,7 @@ access_token_secret='uBjBs8sFPyVNZLLaupNkpc1gJlWpAxgAkxZCFaPIkHD49')
     
 timelist=[datetime.datetime(2021, 1, 1, 1, 1, 1, 111111)]
 
-conn = sql.connect('host=localhost user=NS_User password=NS_Password dbname=NS_Database')
+conn = sql.connect('host=192.168.1.52 user=NS_User password=NS_Password dbname=NS_Database')
 cursor = conn.cursor()
 
 def login(gebruikersnaam, wachtwoord):
