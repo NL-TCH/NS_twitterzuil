@@ -2,7 +2,7 @@ version: '3'
 services:
   database:
     container_name: NS_Database
-    image: postgres:latest
+    image: postgres:9.6
     env_file:
       - database.env
     volumes:
@@ -10,9 +10,11 @@ services:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     healthcheck:
       test: "exit 0"
+    networks:
+      NS_NW:
+        ipv4_address: 10.27.3.100
     ports:
       - 5432:5432
-
     restart: unless-stopped
 
   pgadmin:
@@ -31,6 +33,9 @@ services:
     ports:
     #  - 5050:80 #amd64
       - 5050:5050 #armv7
+    networks:
+      NS_NW:
+        ipv4_address: 10.27.3.101
 
 
   site:
@@ -41,6 +46,9 @@ services:
     privileged: true
     ports:
       - 8085:8085
+    networks:
+      NS_NW:
+        ipv4_address: 10.27.3.200
     restart: unless-stopped
 
 
@@ -50,3 +58,10 @@ volumes:
   pgadmin:
 
 
+networks:
+  NS_NW:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.27.3.0/16
+          gateway: 10.27.3.1
