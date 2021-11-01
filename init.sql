@@ -8,11 +8,11 @@ CREATE TABLE users(
     password varchar(255),
     status integer
 );
-CREATE TABLE klachten (
-    klacht_id SERIAL PRIMARY KEY,
+CREATE TABLE reviews (
+    review_id SERIAL PRIMARY KEY,
     naam varchar(255),
     titel varchar(255),
-    klacht varchar(255),
+    review varchar(255),
     scheldwoord varchar(255),
     moderator integer REFERENCES users(user_id) ON DELETE RESTRICT, --On delete of foreign key, the value/row is not deleted
     --other options are: SET NULL or SET DEFAULT

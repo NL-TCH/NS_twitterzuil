@@ -14,11 +14,11 @@ def klachten():
         if Naam =="":
             Naam='anoniem'
         Titel = request.form['Titel']
-        Klacht = request.form['Klacht']
+        Review = request.form['Review']
         Titel = Titel.replace("'","''")
         Naam = Naam.replace("'","''")
-        Klacht = Klacht.replace("'","''")
-        functions.moderator(Naam,Titel,Klacht)
+        Review = Review.replace("'","''")
+        functions.moderator(Naam,Titel,Review)
         return render_template('bedankt.html')
 
     elif request.method =='GET':
